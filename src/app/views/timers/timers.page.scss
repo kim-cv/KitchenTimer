@@ -1,0 +1,37 @@
+ion-card {
+    --background: white;
+    margin-bottom: 20px;
+    padding-right:6px;
+    border-left: 6px solid rgba(255, 0, 0, 0);
+}
+
+ion-card-header {
+    font-size: 22px ;
+    color: #4e4e4e ;
+    margin-bottom: 0px ;
+    padding-bottom: 0px ;
+}
+
+ion-card-content {
+    font-size: 36px ;
+    color: #393939 ;
+    letter-spacing: 3px;
+    margin-bottom: 0px ;
+    padding-bottom: 0px ;
+}
+
+.cardBtn {
+    --border-radius: 6px;
+}
+
+.isRunning {
+    border-left: 6px solid var(--ion-color-primary);
+}
+
+.isPaused {
+    border-left: 6px solid var(--main-color);
+}
+
+.isDone {
+    border-left: 6px solid var(--ion-color-success);
+}

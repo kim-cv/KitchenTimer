@@ -1,0 +1,112 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Timers
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-card *ngFor="let timer of timerService.timers"
+            [ngClass]="{
+              'isDone': timer.state === timerStatus.DONE, 
+              'isRunning': timer.state === timerStatus.COUNTING, 
+              'isPaused': timer.state === timerStatus.PAUSED}">
+    <ion-card-header *ngIf="timer.state === timerStatus.DONE">
+      {{timer.name}} - Finished!
+    </ion-card-header>
+    <ion-card-header *ngIf="timer.state === timerStatus.COUNTING">
+      {{timer.name}}
+    </ion-card-header>
+    <ion-card-header *ngIf="timer.state === timerStatus.IDLE || timer.state === timerStatus.PAUSED">
+      {{timer.name}}
+    </ion-card-header>
+
+    <ion-card-content>
+      {{timer.remainingTimeFormattet}}
+    </ion-card-content>
+
+    <ion-row *ngIf="timer.state === timerStatus.DONE">
+      <ion-col>
+        <ion-button class='cardBtn'
+                    expand="block"
+                    color="primary"
+                    *ngIf="timer.state == timerStatus.DONE"
+                    (click)="HTMLOnReset(timer, $event)">
+          <ion-icon name="refresh"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="timer.state === timerStatus.COUNTING">
+      <ion-col>
+        <ion-button class='cardBtn'
+                    expand="block"
+                    color="light"
+                    (click)="HTMLOnPause(timer, $event)">
+          <ion-icon name="pause"></ion-icon>
+        </ion-button>
+      </ion-col>
+
+      <ion-col>
+        <ion-button class='cardBtn'
+                    expand="block"
+                    color="light"
+                    (click)="HTMLOnReset(timer, $event)">
+          <ion-icon name="refresh"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="timer.state === timerStatus.IDLE || timer.state === timerStatus.PAUSED">
+      <ion-col>
+        <ion-button class='cardBtn'
+                    expand="block"
+                    color="primary"
+                    *ngIf="timer.state == timerStatus.IDLE"
+                    (click)="HTMLOnPlay(timer, $event)">
+          <ion-icon name="play"></ion-icon>
+        </ion-button>
+
+        <ion-button class='cardBtn'
+                    expand="block"
+                    color="light"
+                    *ngIf="timer.state == timerStatus.PAUSED"
+                    (click)="HTMLOnPlay(timer, $event)">
+          <ion-icon name="play"></ion-icon>
+        </ion-button>
+      </ion-col>
+
+      <ion-col>
+        <ion-button class='cardBtn'
+                    expand="block"
+                    color="light"
+                    *ngIf="timer.state == timerStatus.PAUSED || timer.state == timerStatus.DONE"
+                    (click)="HTMLOnReset(timer, $event)">
+          <ion-icon name="refresh"></ion-icon>
+        </ion-button>
+
+        <ion-button class='cardBtn'
+                    expand="block"
+                    color="light"
+                    *ngIf="timer.state == timerStatus.IDLE"
+                    (click)="HTMLOnEdit(timer, $event)">
+          <ion-icon name="settings"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+  </ion-card>
+
+
+  <!-- btn FAB Add Timer -->
+  <ion-fab vertical="bottom"
+           horizontal="end"
+           slot="fixed">
+    <ion-fab-button (click)="HTMLOnAddTimer($event)">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  
+</ion-content>
