@@ -57,7 +57,7 @@ export class AddTimerComponent implements OnInit {
       hours: ['', [Validators.required]],
       minutes: ['', [Validators.required]],
       seconds: ['', [Validators.required]],
-      type: ['', [Validators.required]]
+      type: ['true', [Validators.required]]
     });
   }
 
