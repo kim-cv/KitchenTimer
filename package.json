@@ -11,6 +11,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build_capacitor": "ionic build && npx cap copy",
+    "build_capacitor_prod": "ionic build --prod && npx cap copy",
     "open_android_studio": "npx cap open android"
   },
   "private": true,

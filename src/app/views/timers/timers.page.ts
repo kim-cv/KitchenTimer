@@ -14,7 +14,7 @@ export class TimersPage {
 
   public timerStatus = TimerStatus;
 
-  constructor(private router: Router, private actionSheetCtrl: ActionSheetController, private timerService: TimerService) { }
+  constructor(private router: Router, private actionSheetCtrl: ActionSheetController, public timerService: TimerService) { }
 
   private OnAddTimer() {
     this.router.navigate(['/AddTimer']);
