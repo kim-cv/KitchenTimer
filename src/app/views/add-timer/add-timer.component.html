@@ -1,0 +1,116 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Add Timer
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <form [formGroup]="formgroupAddTimer">
+    <!-- Name -->
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label color="primary"
+                     stacked>Name</ion-label>
+
+          <ion-input formControlName="name"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <!-- Hours -->
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label color="primary"
+                     stacked>Hours</ion-label>
+          <ion-datetime displayFormat="HH"
+                        pickerFormat="HH"
+                        formControlName="hours"></ion-datetime>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <!-- Minutes -->
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label color="primary"
+                     stacked>Minutes</ion-label>
+          <ion-datetime displayFormat="mm"
+                        pickerFormat="mm"
+                        formControlName="minutes"></ion-datetime>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <!-- Seconds -->
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label color="primary"
+                     stacked>Seconds</ion-label>
+          <ion-datetime displayFormat="ss"
+                        pickerFormat="ss"
+                        formControlName="seconds"></ion-datetime>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <!-- Type -->
+    <ion-row>
+      <ion-col>
+        <ion-list>
+
+          <ion-radio-group formControlName="type">
+            <ion-list-header>
+              <ion-label>Timer type</ion-label>
+            </ion-list-header>
+
+            <ion-item>
+              <ion-label>Choose if you want to save this timer or just use it once.</ion-label>
+            </ion-item>
+
+            <ion-item>
+              <ion-label>Save</ion-label>
+              <ion-radio slot="start"
+                         value="true"
+                         checked></ion-radio>
+            </ion-item>
+
+            <ion-item>
+              <ion-label>Only once</ion-label>
+              <ion-radio slot="start"
+                         value="false"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+          
+        </ion-list>
+      </ion-col>
+    </ion-row>
+
+    <!-- Save or Cancel -->
+    <ion-row>
+      <ion-col>
+        <ion-button expand="block"
+                    color="danger"
+                    (click)="HTMLOnCancel($event)">
+          Cancel
+          <ion-icon name="arrow-back"></ion-icon>
+        </ion-button>
+      </ion-col>
+
+      <ion-col>
+        <ion-button expand="block"
+                    (click)="HTMLOnSave($event)">
+          Save
+          <ion-icon name="checkmark-circle-outline"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+
+</ion-content>
