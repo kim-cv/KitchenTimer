@@ -15,7 +15,7 @@ export class TimerService {
   public timers: Timer[] = [];
 
   constructor(private fileSystemService: FilesystemService, private notificationService: NotificationService) {
-    // this.RetrieveTimersFromOldStorage();
+    this.RetrieveTimersFromOldStorage();
     // this.AddTimerToList(this.CreateTimer('Test Timer1', false, 50));
     // this.AddTimerToList(this.CreateTimer('Test Timer2', false, 5));
 
@@ -180,9 +180,25 @@ export class TimerService {
    */
   private MapOldTimersToNewTimers(oldTimers: IOldTimer[]): Timer[] {
     return oldTimers.map(element => {
+      const name = element.title ? element.title : 'Unknown Title';
+
+      let timerLengthInSeconds = 0;
+      if (typeof element.time === 'string' && element.time !== null) {
+        // Split 00:00:00 into three parts
+        const splitted: string[] = element.time.split(':');
+        // Map to numbers
+        const splittedToNumbers: number[] = splitted.map(tmpSplit => parseInt(tmpSplit, 10));
+        // Convert hours and minutes to seconds
+        splittedToNumbers[0] = splittedToNumbers[0] * 60 * 60;
+        splittedToNumbers[1] = splittedToNumbers[1] * 60;
+
+        // Sum the numbers
+        timerLengthInSeconds = splittedToNumbers.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+      }
+
       const tmpTimerData = {
-        name: (element.title ? element.title : 'Unknown Title'),
-        timerLengthInSeconds: (element.length ? element.length : 0)
+        name,
+        timerLengthInSeconds
       };
 
       return this.CreateTimer(tmpTimerData.name, true, tmpTimerData.timerLengthInSeconds);
@@ -199,19 +215,20 @@ export class TimerService {
   /**
    * @description Typeguard to verify the data corrosponds to our old timer interface contract
    */
-  private isOldTimer(value: any): value is IOldTimer {
+  private isOldTimer(value: any): boolean {
     /**
      * title required and must be string and atleast have a length of 1
-     * length required and must be number and larger than 0
+     * time required and must be string and length of 8 because old time value is 00:00:00
      * id is NOT required so it can be undefined or null but IF it's present it must be string
      */
     return typeof value === 'object' &&
       'title' in value && typeof value.title === 'string' && value.title.length >= 1 &&
-      'length' in value && typeof value.length === 'number' && value.length >= 0 &&
+      'time' in value && typeof value.time === 'string' && value.time.length === 8;
+      /* &&
       (
         (typeof value.id === 'undefined' || value.id === null) ||
         ('id' in value && typeof value.id === 'string')
-      );
+      );*/
   }
   // #endregion
 }

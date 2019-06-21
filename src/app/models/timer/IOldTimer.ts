@@ -1,5 +1,4 @@
 export interface IOldTimer {
-    id: string | undefined;
     title: string;
-    length: number;
+    time: string; // 00:00:00
 }

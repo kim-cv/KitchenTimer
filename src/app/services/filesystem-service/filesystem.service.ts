@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Plugins, FilesystemEncoding } from '@capacitor/core';
+import { Plugins, FilesystemEncoding, FilesystemDirectory } from '@capacitor/core';
 import { Timer } from 'src/app/models/timer/Timer';
 import { ITimer } from 'src/app/models/timer/ITimer';
 
@@ -34,12 +34,14 @@ export class FilesystemService {
     try {
       fileAsJsonObj = JSON.parse(file.data);
     } catch (e) {
-      throw new Error('Could not parse file data as json');
+      // throw new Error('Could not parse file data as json');
+      return [];
     }
 
     // Make sure JSON.parse succeded
     if (typeof fileAsJsonObj === undefined || fileAsJsonObj === null) {
-      throw new Error('JSON_NO_CONTENT');
+      // throw new Error('JSON_NO_CONTENT');
+      return [];
     }
 
     // Check if array of entries or just single entry
@@ -58,7 +60,12 @@ export class FilesystemService {
    * Read file from path
    */
   private async ReadFile(path: string) {
-    return Plugins.Filesystem.readFile({ path, encoding: FilesystemEncoding.UTF8 });
+    return Plugins.Filesystem.readFile(
+      {
+        path,
+        directory: FilesystemDirectory.Application,
+        encoding: FilesystemEncoding.UTF8
+      });
   }
 
   /**
